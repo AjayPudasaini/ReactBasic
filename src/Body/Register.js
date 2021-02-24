@@ -1,6 +1,24 @@
+import { event } from "jquery";
 import { Component } from "react";
+import axios from 'axios';
 
 class Register extends Component{
+    state = {
+        username : "",
+        email : "", 
+        password : "",
+
+    }
+    sendUserData = () =>
+    {
+        const data = {
+            username : this.state.username, 
+            email : this.state.email,
+            password : this.state.password
+        }
+
+        axios.post("http://localhost:1337/register/teacher", data).then().catch()
+    }
     render()
     {
         return(
@@ -8,19 +26,19 @@ class Register extends Component{
                 <h1>Register</h1>
                 <form>
                     <div className="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
-                        <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
+                        <label>Username</label>
+                        <input type="text" className="form-control" value={this.state.username} onChange={(event)=>{this.setState({username:event.target.value})}} placeholder="Enter username" />
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password"/>
+                    <div className="form-group">
+                        <label>Email address</label>
+                        <input type="email" className="form-control"  value={this.state.email} onChange={(event)=>{this.setState({email:event.target.value})}} placeholder="Enter email" />
                     </div>
-                    <div class="form-check">
-                        <input type="checkbox" className="form-check-input" id="exampleCheck1"/>
-                        <label className="form-check-label" for="exampleCheck1">Check me out</label>
+                    <div className="form-group">
+                        <label>Password</label>
+                        <input type="password" className="form-control" value={this.state.password} onChange={(event)=>{this.setState({password:event.target.value})}} placeholder="Password"/>
                     </div>
-                    <button type="submit" className="btn btn-primary">Submit</button>
+                
+                    <button type="submit" onClick={this.sendUserData} className="btn btn-primary">Submit</button>
                 </form>
             </div>
         )
